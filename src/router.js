@@ -1,9 +1,9 @@
 /*
- * @Description: In User Settings Edit
+ * @Description: 路由模块
  * @Author: your name
  * @Date: 2019-09-25 22:40:24
- * @LastEditTime: 2019-09-25 22:40:24
- * @LastEditors: your name
+ * @LastEditTime: 2019-09-26 17:06:04
+ * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue'
 import Router from 'vue-router'
