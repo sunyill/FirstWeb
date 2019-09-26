@@ -1,18 +1,23 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-09-25 22:40:24
+ * @LastEditTime: 2019-09-26 16:36:05
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    this is home page
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'home',
+
   components: {
-    HelloWorld
+
   }
 }
 </script>
