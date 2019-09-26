@@ -1,20 +1,20 @@
 <!--
  * @Description: In User Settings Edit
  * @Author: your name
- * @Date: 2019-09-25 22:40:24
- * @LastEditTime: 2019-09-26 17:18:11
+ * @Date: 2019-09-26 17:14:26
+ * @LastEditTime: 2019-09-26 17:15:33
  * @LastEditors: Please set LastEditors
  -->
 <template>
-  <home></home>
+    <div>this is  首页</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Home from './home/index'
 export default {
-  components: {
-    Home
-  }
+
 }
 </script>
+
+<style>
+
+</style>

@@ -2,13 +2,13 @@
  * @Description: 路由模块
  * @Author: your name
  * @Date: 2019-09-25 22:40:24
- * @LastEditTime: 2019-09-26 17:06:04
+ * @LastEditTime: 2019-09-26 17:19:10
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-
+import Login from './views/login'
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
     // {
     //   path: '/about',
