@@ -2,7 +2,7 @@
  * @Description: 登录页
  * @Author: your name
  * @Date: 2019-09-26 17:14:16
- * @LastEditTime: 2019-09-26 18:03:39
+ * @LastEditTime: 2019-09-28 13:16:50
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -16,27 +16,31 @@
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="60px"
+        label-width="80px"
         class="demo-ruleForm"
       >
-        <el-form-item label="手机号" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off" placeholder="请输入手机号"></el-input>
+        <el-form-item label="手机号" prop="mobile">
+          <el-input v-model="ruleForm.mobile" autocomplete="off" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item label="验证码" prop="checkPass" >
+        <el-form-item label="验证码" prop="code">
           <el-input
             type="password"
-            v-model="ruleForm.checkPass"
+            v-model="ruleForm.code"
             autocomplete="off"
             placeholder="请输入验证码"
             style="width:60%"
           ></el-input>
           <el-button type="primary" style="float:right">发送验证码</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-checkbox style="float:left" name="type">我已阅读并同意用户协议和隐私条款</el-checkbox>
+        <el-form-item prop="check">
+          <el-checkbox v-model="ruleForm.check" style="float:left" name="type">
+            我已阅读并同意
+            <span>用户协议</span>和
+            <span>隐私条款</span>
+          </el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="passlogin">登录</el-button>
+          <el-button type="primary" class="passlogin" @click="passlogin">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -44,68 +48,57 @@
 </template>
 <script>
 export default {
+
   data () {
-    var checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('年龄不能为空'))
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('请输入数字值'))
-        } else {
-          if (value < 18) {
-            callback(new Error('必须年满18岁'))
-          } else {
-            callback()
-          }
-        }
-      }, 1000)
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
-        }
+    // check时 定义的自定义方法
+    var myCheckValidator = function (rules, value, callback) {
+      if (value) {
         callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入密码'))
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error('两次输入密码不一致!'))
       } else {
-        callback()
+        callback(new Error('你必须同意此选项'))
       }
     }
+
     return {
       ruleForm: {
-        pass: '',
-        checkPass: '',
-        age: ''
+        mobile: '13911111111',
+        code: '',
+        check: false
       },
+      // 校验规则
       rules: {
-        pass: [{ validator: validatePass, trigger: 'blur' }],
-        checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-        age: [{ validator: checkAge, trigger: 'blur' }]
+        mobile: [
+          { required: true, message: '输入的信息不能为空', trigger: 'blur' },
+          // 验证的正则
+          { pattern: /^1[3456789]\d{9}$/, message: '手机格式错误' }
+        ],
+        code: [
+          { required: true, message: '验证码格式错误', trigger: 'blur' },
+          { pattern: /^\d{6}$/, message: '验证码格式错误' }
+        ],
+        check: [
+          {
+            // 自定义函数
+            validator: myCheckValidator
+          }
+        ]
       }
     }
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+    /**
+     * @description:登录验证
+     * @param {type} validate: 手动校验表单数据
+     * @return:
+     */
+    passlogin () {
+      this.$refs.ruleForm.validate((isOk) => {
+        if (isOk) {
+          console.log('登录界面校验通过')
+          // 进入到首页
+          this.$router.push('/')
         }
       })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
     }
   }
 }
@@ -130,6 +123,9 @@ export default {
       img {
         width: 100%;
       }
+    }
+    span {
+      color: pink;
     }
     .passlogin {
       margin-left: -30px;
